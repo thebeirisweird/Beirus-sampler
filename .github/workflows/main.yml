@@ -1,0 +1,8 @@
+cd ~
+unzip -o BeirusSampler_Fixed.zip
+cd BeirusSampler_Fixed
+git init
+git add .
+git commit -m "Beirus Sampler initial"
+git remote add origin https://github.com/thebeirisweird/BeirusSampler.git
+git push -u origin main
