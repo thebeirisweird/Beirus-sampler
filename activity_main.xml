@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Waveform display -->
+        <com.example.beirus.WaveformView
+            android:id="@+id/waveformView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#0D0D0D" />
+
+        <!-- Load + Rec row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btnLoad"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="LOAD WAV"
+                android:backgroundTint="#1A6B3C"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="6dp" />
+
+            <Button
+                android:id="@+id/btnRecord"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="REC"
+                android:backgroundTint="#8B0000"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- 4x4 Pad grid -->
+        <GridLayout
+            android:id="@+id/padGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:columnCount="4"
+            android:rowCount="4"
+            android:useDefaultMargins="false">
+
+            <!-- Row 1 -->
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P1"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P2"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P3"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P4"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+
+            <!-- Row 2 -->
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P5"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P6"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P7"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P8"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+
+            <!-- Row 3 -->
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P9"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P10"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P11"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P12"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+
+            <!-- Row 4 -->
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P13"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P14"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P15"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+            <Button android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_columnWeight="1" android:text="P16"
+                android:backgroundTint="#1C3A5E" android:textColor="#80CFFF"
+                android:layout_margin="3dp" android:enabled="false"/>
+
+        </GridLayout>
+
+        <!-- Pitch slider -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="PITCH / SPEED" android:textColor="#AAAAAA"
+            android:textSize="11sp" android:layout_marginTop="10dp"/>
+        <SeekBar android:id="@+id/pitchSlider"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:max="375" android:progress="75"/>
+        <!-- progress 75 → (75+25)/100 = 1.0× (see MainActivity.kt coerceIn 25..400) -->
+
+        <!-- Filter slider -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="LO-FI FILTER" android:textColor="#AAAAAA"
+            android:textSize="11sp" android:layout_marginTop="8dp"/>
+        <SeekBar android:id="@+id/filterSlider"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:max="100" android:progress="100"/>
+
+        <!-- Keyboard hint -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="USB keyboard: Z X C V = pads 1–4 · A S D F = pads 5–8"
+            android:textColor="#555555" android:textSize="11sp"
+            android:layout_marginTop="8dp" android:paddingBottom="8dp"/>
+
+    </LinearLayout>
+</ScrollView>
