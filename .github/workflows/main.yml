@@ -3,7 +3,11 @@ name: Build BeirusSampler APK
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch: # This allows you to run it manually
+  workflow_dispatch:
+
+# This tells GitHub to use Node 24 for the actions
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
@@ -13,7 +17,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
-        submodules: 'recursive' # Important for the Oboe library
+        submodules: 'recursive'
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
