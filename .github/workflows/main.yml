@@ -1,6 +1,26 @@
-steps:
-  - uses: actions/checkout@v6
-  - uses: actions/setup-java@v5
-    with:
-      distribution: 'temurin'
-      java-version: '21' 
+name: Android Build
+
+# 1. Tells GitHub WHEN to run this workflow
+on:
+  push:
+    branches: [ "main" ] # Change this to your default branch if it's different
+
+# 2. Defines the JOBS to run
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # 3. Now you can list your STEPS inside the job
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21' 
+
+      # Add your build command from earlier
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
