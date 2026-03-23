@@ -21,11 +21,19 @@ jobs:
     - name: Unzip Project
       run: unzip -q "BeirusSampler_Fixed.zip" -d workspace
 
-    - name: Repair Gradle and Build
+    - name: Fix Whitespace, Repair, and Build
       run: |
+        # Find the gradlew file
         GRADLE_PATH=$(find workspace -name "gradlew" | head -n 1)
-        APP_DIR=$(dirname "$GRADLE_PATH")
-        cd "$APP_DIR"
+        
+        # Get the weird folder name that has the invisible space
+        WEIRD_DIR=$(dirname "$GRADLE_PATH")
+        
+        # Rename that folder to a safe name with no spaces!
+        mv "$WEIRD_DIR" safe_android_project
+        cd safe_android_project
+        
+        # Repair the broken file and build the app
         gradle wrapper
         chmod +x gradlew
         ./gradlew assembleDebug
@@ -34,4 +42,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Beirus-Sampler-APK
+        path: safe_android_project/**/*.apk
         path: workspace/**/*.apk
