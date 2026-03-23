@@ -21,19 +21,34 @@ jobs:
     - name: Unzip Project
       run: unzip -q "BeirusSampler_Fixed.zip" -d workspace
 
-    - name: Fix Whitespace, Repair, and Build
+    - name: Fix Code, Repair, and Build
       run: |
-        # Find the gradlew file
+        # Find and fix the weird folder spacing
         GRADLE_PATH=$(find workspace -name "gradlew" | head -n 1)
-        
-        # Get the weird folder name that has the invisible space
         WEIRD_DIR=$(dirname "$GRADLE_PATH")
-        
-        # Rename that folder to a safe name with no spaces!
         mv "$WEIRD_DIR" safe_android_project
         cd safe_android_project
         
+        # MAGIC FIX: Find the C++ file and swap the periods for arrows!
+        CPP_FILE=$(find app/src/main/cpp -name "native-lib.cpp" | head -n 1)
+        if [ -n "$CPP_FILE" ]; then
+          sed -i 's/\.setSharingMode/->setSharingMode/g' "$CPP_FILE"
+          sed -i 's/\.setPerformanceMode/->setPerformanceMode/g' "$CPP_FILE"
+          sed -i 's/\.setChannelCount/->setChannelCount/g' "$CPP_FILE"
+          sed -i 's/\.setFormat/->setFormat/g' "$CPP_FILE"
+          sed -i 's/\.setDataCallback/->setDataCallback/g' "$CPP_FILE"
+        fi
+        
         # Repair the broken file and build the app
+        gradle wrapper
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: safe_android_project/**/*.apk
         gradle wrapper
         chmod +x gradlew
         ./gradlew assembleDebug
