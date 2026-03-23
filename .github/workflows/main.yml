@@ -23,15 +23,10 @@ jobs:
 
     - name: Repair Gradle and Build
       run: |
-        # Find the project folder
         GRADLE_PATH=$(find workspace -name "gradlew" | head -n 1)
         APP_DIR=$(dirname "$GRADLE_PATH")
         cd "$APP_DIR"
-        
-        # This command repairs the corrupted jar file that caused the crash!
         gradle wrapper
-        
-        # Grant permissions and compile the app
         chmod +x gradlew
         ./gradlew assembleDebug
 
@@ -40,25 +35,6 @@ jobs:
       with:
         name: Beirus-Sampler-APK
         path: workspace/**/*.apk
-
-    - name: Save APK for Download
-      uses: actions/upload-artifact@v4
-      with:
-        name: Beirus-Sampler-APK
-        path: workspace/**/*.apk
-
-    - name: Save APK for Download
-      uses: actions/upload-artifact@v4
-      with:
-        name: Beirus-Sampler-APK
-        path: workspace/**/*.apk
-
-    - name: Save APK for Download
-      uses: actions/upload-artifact@v4
-      with:
-        name: Beirus-Sampler-APK
-        path: workspace/**/*.apk
-
     - name: Save APK for Download
       uses: actions/upload-artifact@v4
       with:
