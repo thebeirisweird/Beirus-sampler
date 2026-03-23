@@ -44,33 +44,3 @@ jobs:
       with:
         name: Beirus-Sampler-APK
         path: workspace/**/*.apk
-        APP_DIR=$(dirname "$GRADLE_PATH")
-        cd "$APP_DIR"
-        chmod +x gradlew
-        ./gradlew assembleDebug
-
-    - name: Save APK for Download
-      uses: actions/upload-artifact@v4
-      with:
-        name: Beirus-Sampler-APK
-        path: workspace/**/*.apk
-        
-        npm install
-        npm run build
-        npx cap sync android
-        
-        # Saves this exact folder path for the Gradle step
-        echo "APP_DIR=$APP_DIR" >> $GITHUB_ENV
-
-    - name: Build APK with Gradle
-      run: |
-        cd "$APP_DIR/android"
-        chmod +x gradlew
-        ./gradlew assembleDebug
-
-    - name: Save APK for Download
-      uses: actions/upload-artifact@v4
-      with:
-        name: Beirus-Sampler-APK
-        # This wildcard setup grabs the final APK no matter what folder it ended up in
-        path: workspace/**/*.apk
