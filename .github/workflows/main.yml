@@ -44,6 +44,16 @@ jobs:
       with:
         name: Beirus-Sampler-APK
         path: workspace/**/*.apk
+        APP_DIR=$(dirname "$GRADLE_PATH")
+        cd "$APP_DIR"
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: workspace/**/*.apk
         
         npm install
         npm run build
