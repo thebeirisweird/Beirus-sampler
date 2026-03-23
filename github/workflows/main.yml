@@ -1,0 +1,37 @@
+name: Build Native Android App
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Unzip Project
+      run: unzip -q "BeirusSampler_Fixed.zip" -d workspace
+
+    - name: Repair Gradle and Build
+      run: |
+        GRADLE_PATH=$(find workspace -name "gradlew" | head -n 1)
+        APP_DIR=$(dirname "$GRADLE_PATH")
+        cd "$APP_DIR"
+        gradle wrapper
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: workspace/**/*.apk
