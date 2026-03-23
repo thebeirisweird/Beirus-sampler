@@ -48,10 +48,8 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Beirus-Sampler-APK
-        path: safe_android_project/**/*.apk
-        gradle wrapper
-        chmod +x gradlew
-        ./gradlew assembleDebug
+        path: safe_android_project/**/*.apk gradle wrapper
+         chmod +x gradlew./gradlew assembleDebug
 
     - name: Save APK for Download
       uses: actions/upload-artifact@v4
