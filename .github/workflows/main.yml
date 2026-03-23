@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
 
     - name: Unzip Project
-      run: unzip -q "BeirusSampler_Fixed (1).zip" -d workspace
+      run: unzip -q "BeirusSampler_Fixed.zip" -d workspace
 
     - name: Find Gradle and Build
       run: |
