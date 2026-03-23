@@ -19,21 +19,27 @@ jobs:
         java-version: '17'
 
     - name: Unzip Project
-      run: unzip -q "BeirusSampler_Fixed.zip" -d workspace
+      run: unzip -q "BeirusSampler_Fixed (1).zip" -d workspace
 
-    - name: Find Gradle and Build
+    - name: Repair Gradle and Build
       run: |
-        # Search the entire zip file for the gradlew tool
+        # Find the project folder
         GRADLE_PATH=$(find workspace -name "gradlew" | head -n 1)
+        APP_DIR=$(dirname "$GRADLE_PATH")
+        cd "$APP_DIR"
         
-        # If it can't find it, print out everything in the zip so we can see what's wrong
-        if [ -z "$GRADLE_PATH" ]; then
-          echo "Could not find gradlew! Printing the contents of the zip file:"
-          find workspace
-          exit 1
-        fi
+        # This command repairs the corrupted jar file that caused the crash!
+        gradle wrapper
         
-        # If it finds it, open that folder and build the app!
+        # Grant permissions and compile the app
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: workspace/**/*.apk
         APP_DIR=$(dirname "$GRADLE_PATH")
         cd "$APP_DIR"
         chmod +x gradlew
