@@ -27,13 +27,33 @@ jobs:
         java-version: '17'
 
     - name: Unzip Project
-      run: unzip -q *.zip -d workspace
+      run: unzip -q "BeirusSampler_Fixed (1).zip" -d workspace
 
     - name: Install and Sync Capacitor
       run: |
-        cd workspace
+        # This automatically hunts down the folder holding your package.json!
+        APP_DIR=$(dirname $(find workspace -name "package.json" | head -n 1))
+        cd "$APP_DIR"
+        
         npm install
         npm run build
+        npx cap sync android
+        
+        # Saves this exact folder path for the Gradle step
+        echo "APP_DIR=$APP_DIR" >> $GITHUB_ENV
+
+    - name: Build APK with Gradle
+      run: |
+        cd "$APP_DIR/android"
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        # This wildcard setup grabs the final APK no matter what folder it ended up in
+        path: workspace/**/*.apk
         npx cap sync android
 
     - name: Build APK with Gradle
