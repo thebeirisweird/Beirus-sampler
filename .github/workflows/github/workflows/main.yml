@@ -1,0 +1,49 @@
+name: Build Capacitor Sampler App
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Unzip Project
+      run: unzip -q *.zip -d workspace
+
+    - name: Install and Sync Capacitor
+      run: |
+        cd workspace
+        npm install
+        npm run build
+        npx cap sync android
+
+    - name: Build APK with Gradle
+      run: |
+        cd workspace/android
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: workspace/android/app/build/outputs/apk/debug/**/*.apk
