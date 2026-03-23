@@ -1,39 +1,54 @@
-name: Android Build
+name: Build Capacitor Sampler App
 
-# 1. Tells GitHub WHEN to run this workflow
 on:
   push:
-    branches: [ "main" ] # Change this to your default branch if it's different
+    branches: [ "main" ]
 
-# 2. Defines the JOBS to run
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    # 3. Now you can list your STEPS inside the job
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '21' 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      # Add your build command from earlier
-      - name: Navigate, Fix Permissions, and Build
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-      - name: Save APK for Download
-        uses: actions/upload-artifact@v4
-        with:
-          name: Beirus-Sampler-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+    - name: Unzip Project
+      # Extracts your uploaded zip into a folder called 'workspace'
+      run: unzip -q *.zip -d workspace
 
+    - name: Install and Sync Capacitor
+      run: |
+        cd workspace
+        # Installs all the necessary web and capacitor packages
+        npm install
+        # Builds the web code
+        npm run build
+        # Syncs the web code into the Android folder
+        npx cap sync android
+
+    - name: Build APK with Gradle
+      run: |
+        # Navigates into the android folder created/synced by Capacitor
+        cd workspace/android
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: workspace/android/app/build/outputs/apk/debug/**/*.apk
       - name: Build with Gradle
         run: ./gradlew assembleDebug
 
