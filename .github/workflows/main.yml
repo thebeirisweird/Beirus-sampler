@@ -4,6 +4,10 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  # This clears out that Node 20 warning from earlier
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,16 +28,26 @@ jobs:
         java-version: '17'
 
     - name: Unzip Project
-      # Extracts your uploaded zip into a folder called 'workspace'
       run: unzip -q *.zip -d workspace
 
     - name: Install and Sync Capacitor
       run: |
         cd workspace
-        # Installs all the necessary web and capacitor packages
         npm install
-        # Builds the web code
         npm run build
+        npx cap sync android
+
+    - name: Build APK with Gradle
+      run: |
+        cd workspace/android
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: workspace/android/app/build/outputs/apk/debug/**/*.apk
         # Syncs the web code into the Android folder
         npx cap sync android
 
