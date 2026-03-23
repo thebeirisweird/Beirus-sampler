@@ -5,7 +5,6 @@ on:
     branches: [ "main" ]
 
 env:
-  # This clears out that Node 20 warning from earlier
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -48,23 +47,3 @@ jobs:
       with:
         name: Beirus-Sampler-APK
         path: workspace/android/app/build/outputs/apk/debug/**/*.apk
-        # Syncs the web code into the Android folder
-        npx cap sync android
-
-    - name: Build APK with Gradle
-      run: |
-        # Navigates into the android folder created/synced by Capacitor
-        cd workspace/android
-        chmod +x gradlew
-        ./gradlew assembleDebug
-
-    - name: Save APK for Download
-      uses: actions/upload-artifact@v4
-      with:
-        name: Beirus-Sampler-APK
-        path: workspace/android/app/build/outputs/apk/debug/**/*.apk
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
-
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
