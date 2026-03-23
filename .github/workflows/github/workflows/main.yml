@@ -27,13 +27,27 @@ jobs:
         java-version: '17'
 
     - name: Unzip Project
-      run: unzip -q *.zip -d workspace
+      # The quotes here are the magic fix for the spaces in your file name!
+      run: unzip -q "BeirusSampler_Fixed (1).zip" -d workspace
 
     - name: Install and Sync Capacitor
       run: |
         cd workspace
         npm install
         npm run build
+        npx cap sync android
+
+    - name: Build APK with Gradle
+      run: |
+        cd workspace/android
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Save APK for Download
+      uses: actions/upload-artifact@v4
+      with:
+        name: Beirus-Sampler-APK
+        path: workspace/android/app/build/outputs/apk/debug/**/*.apk
         npx cap sync android
 
     - name: Build APK with Gradle
